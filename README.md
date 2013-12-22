@@ -6,4 +6,7 @@
 • Selling bitcoin through command line   
 
 * TODO:   
-Add a shell-like terminal environment   
+Add a shell-like terminal environment  
+
+* Would you like to tip me some bitcoin?   
+1AbSzAUxWgfVzw1nMXjMk9vdvY5N4wR2Ei    
