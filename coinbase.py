@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-import urllib2, json
+import urllib2, json, urllib
 
 user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31"
-api_key = #### Enter your own api key! ####
+api_key = ##  Replace with your api key! ##
 url = "https://coinbase.com/api/v1/"
 
 
@@ -19,9 +19,13 @@ class Coinbase(object):
 		elif request_type == "exchange_rates":
 			req = urllib2.Request(url + "currencies/exchange_rates?api_key=" + api_key, headers = {"User-Agent" : user_agent})
 		elif request_type == "buy_price":
-			req = urllib2.Request(url + ("prices/buy?qty=%g&api_key=%s" % (arg, api_key)), headers = {"User-Agent" : user_agent})
+			req = urllib2.Request(url + ("prices/buy?api_key=%s&qty=%g" % (api_key, arg)), headers = {"User-Agent" : user_agent})
 		elif request_type == "sell_price":
-			req = urllib2.Request(url + ("prices/sell?qty=%g&api_key=%s" % (arg, api_key)), headers = {"User-Agent" : user_agent})
+			req = urllib2.Request(url + ("prices/sell?api_key=%s&qty=%g" % (api_key, arg)), headers = {"User-Agent" : user_agent})
+		elif request_type == "buy":
+			req = urllib2.Request(url + "buys?api_key=" + api_key, data = urllib.urlencode({"qty" : arg, "agree_btc_amount_varies" : True}), headers = {"User-Agent" : user_agent})
+		elif request_type == "sell":
+			req = urllib2.Request(url + "sells?api_key=" + api_key, data = urllib.urlencode({"qty" : arg}), headers = {"User-Agent" : user_agent})
 
 		if req:
 			content = urllib2.urlopen(req)
@@ -35,6 +39,7 @@ class Coinbase(object):
 		balance = self.parse_request("balance")
 		if balance:
 			print "My bitcoin balance: " + balance["amount"] + " BTC"
+			self.getCurrency()
 
 	def getReceiveAddress(self):
 		recv_addr = self.parse_request("receive_address")
@@ -65,12 +70,40 @@ class Coinbase(object):
 		if sell_price:
 			print "Total sell price for %g BTCs that will be transferred to bank account is: %s USD" % (qty, sell_price['total']['amount'])
 
+	# 0.0001 BTC could be a successful transaction in coinbase.com
+	def BuyBTC(self, qty = 0.0001):
+		buy_response = self.parse_request("buy", qty);
+		if buy_response:
+#			print json.dumps(buy_response, indent = 4, separators = (",", ":"))
+			if buy_response["success"] == True:
+				print buy_response["transfer"]["description"]
+			else:
+				print "ERROR!! " + str(buy_response["errors"][0])
+			
+			print "After transaction,", 
+			self.getBalance()
+
+	def SellBTC(self, qty = 0.0001):
+		sell_response = self.parse_request("sell", qty);
+		if sell_response:
+			print json.dumps(sell_response, indent = 4, separators = (",", ":"))
+			if sell_response["success"] == True:
+#				print sell_response["transfer"]["description"]
+				pass
+			else:
+				print "ERROR!! " + str(sell_response["errors"][0])
+			
+			print "After transaction,", 
+			self.getBalance()
+
 qty = 1
 if __name__ == "__main__":
 	coinbase = Coinbase()
 	coinbase.getBalance()
 #	coinbase.getReceiveAddress()
 #	coinbase.getAddresses()
-	coinbase.getCurrency()
+#	coinbase.getCurrency()
 	coinbase.getBuyPrice(qty)
 	coinbase.getSellPrice(qty)
+	coinbase.BuyBTC(0.0001)
+	coinbase.SellBTC(0.0001)
