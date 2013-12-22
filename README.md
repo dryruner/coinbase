@@ -5,5 +5,5 @@
 • Buying bitcoin through command line   
 • Selling bitcoin through command line   
 
-* TODO:
+* TODO:   
 Add a shell-like terminal environment   
