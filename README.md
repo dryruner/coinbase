@@ -19,5 +19,5 @@ Please Note that you need to replace the api\_key in the Coinbase.py file.
 • Making alerts to users when coinbase price drops below or rises up higher than the limit set by user.       
 • Auto-trade algorithm.    
 
-* Would you like to tip me some bitcoin?   
-1AbSzAUxWgfVzw1nMXjMk9vdvY5N4wR2Ei    
+* Would you like to tip me some bitcoin?  
+1B5jqRvn3CJBb5KVxSRxa4zXxqUU92ZFzT
