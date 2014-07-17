@@ -3,7 +3,7 @@
 import urllib2, json, urllib, hashlib, time, hmac
 
 user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31"
-api_key = "" 					##  Replace with your api key!    ##
+api_key = "" 	##  Replace with your api key!    ##
 api_secret = ""	##  Replace with your api secret! ##
 base_url = "https://coinbase.com/api/v1/"
 

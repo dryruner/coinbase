@@ -1,5 +1,5 @@
-* Version 2.0
-• Coinbase has changed its API Authentication[https://coinbase.com/docs/api/authentication], there should be an update.
+* Version 2.0   
+• Coinbase has changed its API Authentication method(https://coinbase.com/docs/api/authentication) recently, so there should be an update.
 
 * Support functionalities in the command line environment:   
 • Querying one's BTC balance in the coinbase.com   
